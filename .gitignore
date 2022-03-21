@@ -1,0 +1,52 @@
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+.svn
+
+quickening
+
+*.orig
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# encrypted files from SecureLocalPersistence
+*.lok
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Intellij
+.idea
+atlassian-ide-plugin.xml
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.settings
+.project
+.classpath
+
+#gradle
+.gradle/
+
+# Mac
+.DS_Store
+
+# Maven
+target/
+
+# Log files
+*.log
+
+# Java
+out/**
+*.class
+build/
+
+# Python
+*.pyc
