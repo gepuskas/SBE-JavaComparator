@@ -17,8 +17,10 @@ public class HBaseToBigTableUtils {
           add(Pair.of("driver.getConnection().listTableNames()", "admin.listTableNames()"));
           add(Pair.of("HBaseAdmin hbaseAdmin = new HBaseAdmin(hDriver.getConnection())",
               "Admin hbaseAdmin = hDriver.getConnection().getAdmin()"));
-          add(Pair.of("HBaseAdmin admin = new HBaseAdmin(hDriver.getConnection())", "Admin admin = hDriver.getConnection().getAdmin()"));
-          add(Pair.of("new HBaseAdmin(hDriver.getConnection())", "hDriver.getConnection().getAdmin()"));
+          add(Pair.of("HBaseAdmin admin = new HBaseAdmin(hDriver.getConnection())",
+              "Admin admin = hDriver.getConnection().getAdmin()"));
+          add(Pair.of("new HBaseAdmin(hDriver.getConnection())",
+              "hDriver.getConnection().getAdmin()"));
           add(Pair.of("HBaseAdmin admin", "Admin admin"));
           add(Pair.of("HBaseAdmin ", "Admin "));
           add(Pair.of("HBaseAdmin", "Admin"));
@@ -46,8 +48,10 @@ public class HBaseToBigTableUtils {
           add(Pair.of("hDriver.getNamespace(), tableName", "hDriver.getFullTableName(tableName)"));
           add(Pair.of("anyString(), eq(\"test\")", "any(TableName.class)"));
           add(Pair.of("connection.listTableNames()", "admin.listTableNames()"));
-          add(Pair.of("new HBaseAdmin(hDriver.getConnection())", "hDriver.getConnection().getAdmin()"));
-          add(Pair.of("HBaseAdmin admin = new HBaseAdmin(driver.getConnection())", "Admin admin = driver.getConnection().getAdmin()"));
+          add(Pair.of("new HBaseAdmin(hDriver.getConnection())",
+              "hDriver.getConnection().getAdmin()"));
+          add(Pair.of("HBaseAdmin admin = new HBaseAdmin(driver.getConnection())",
+              "Admin admin = driver.getConnection().getAdmin()"));
         }
       };
 

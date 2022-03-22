@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 
 public class JavaFileComparator {
 
-  private static final String PERSISTANCE_PATH =
-      "/Users/geremia.longobardo/workspace/SBE-BIG-TABLE/SBE/persistence";
+  private static final String SBE_PATH =
+      "/Users/geremia.longobardo/workspace/SBE-BIG-TABLE/SBE";
   private static final String SUFFIX_HBASE = "-hbase";
   private static final String SUFFIX_BIGTABLE = "-bigtable";
   private static final String SUFFIX_JAVA = ".java";
@@ -23,14 +23,18 @@ public class JavaFileComparator {
   private static final int MAX_SPLIT_SEARCH_POS_SHIFT = 10;
 
   public static void main(String[] args) throws IOException {
-    File dir = new File(PERSISTANCE_PATH);
+    String persistenceDir = "";
+    if (args.length > 0) {
+      persistenceDir = args[0] + "/persistence";
+    } else {persistenceDir = SBE_PATH + "/persistence";}
+    File dir = new File(persistenceDir);
     TreeSet<String> bt_dirs = new TreeSet<>();
     TreeSet<String> hb_dirs = new TreeSet<>();
 
     Utils.findDirectory(dir, SUFFIX_HBASE, hb_dirs);
     Utils.findDirectory(dir, SUFFIX_BIGTABLE, bt_dirs);
 
-    TreeMap<String, ArrayList<Report>> allReports = compare(hb_dirs, bt_dirs);
+    TreeMap<String, ArrayList<Report>> allReports = compare(persistenceDir, hb_dirs, bt_dirs);
     printAllReports(allReports);
   }
 
@@ -66,14 +70,15 @@ public class JavaFileComparator {
         i++;
       }
     }
-    if (total > 0){
+    if (total > 0) {
       System.out.println(
           "**** IMPACT WORST DIFF ON TOTAL:  " + (total_worst * 100) / total + "% *** ");
-  }
+    }
     System.out.println("\n**** END  ***\n");
   }
 
-  private static TreeMap<String, ArrayList<Report>> compare(TreeSet<String> hb_dirs,
+  private static TreeMap<String, ArrayList<Report>> compare(String persistenceDir,
+      TreeSet<String> hb_dirs,
       TreeSet<String> bt_dirs)
       throws IOException {
 
@@ -82,9 +87,9 @@ public class JavaFileComparator {
       String hb_dir = bt_dir.replace(SUFFIX_BIGTABLE, SUFFIX_HBASE);
       if (hb_dirs.contains(hb_dir)) {
         TreeMap<Path, File> bt_files =
-            Utils.walkDirectory(PERSISTANCE_PATH + "/" + bt_dir, SUFFIX_JAVA);
+            Utils.walkDirectory(persistenceDir + "/" + bt_dir, SUFFIX_JAVA);
         TreeMap<Path, File> hb_files =
-            Utils.walkDirectory(PERSISTANCE_PATH + "/" + hb_dir, SUFFIX_JAVA);
+            Utils.walkDirectory(persistenceDir + "/" + hb_dir, SUFFIX_JAVA);
 
         allReports.put(hb_dir + " - " + bt_dir, treeDiff(hb_files, bt_files));
       }
